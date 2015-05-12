@@ -4,22 +4,13 @@ var name = 'salesforce-store';
 
 module.exports = function (opts) {
   debug(opts);
-
   var seneca = this;
+  var salesforce = require('./salesforce.js')(this, opts);
   var store = {
     name: name,
-    list: function (args, cb) {
-      debug('list', args);
-      return cb(null, [1, 2]);
-    },
-    save: function (args, cb) {
-      debug('save', args);
-      return cb();
-    },
-    load: function (args, cb) {
-      debug('load', args);
-      return cb();
-    },
+    list: salesforce.list,
+    save: salesforce.save,
+    load: salesforce.load,
     remove: function (args, cb) {
       debug('remove', args);
       return cb();

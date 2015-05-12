@@ -18,6 +18,7 @@
   "dependencies": {
     "debug": "^2.2.0",
     "force": "0.0.3",
+    "jsforce": "^1.4.1",
     "lodash": "3.8.0",
     "seneca": "^0.6.1"
   }
