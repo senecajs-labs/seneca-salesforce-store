@@ -16,6 +16,7 @@
     "turbo-test-runner": "0.5.0"
   },
   "dependencies": {
+    "async": "^0.9.0",
     "debug": "^2.2.0",
     "force": "0.0.3",
     "jsforce": "^1.4.1",

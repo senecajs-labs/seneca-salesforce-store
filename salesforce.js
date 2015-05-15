@@ -74,7 +74,6 @@ module.exports = function salesforce (seneca, opts) {
     var ent = args.ent;
     var obj = unwrapEnt(ent);
 
-    // TODO - again, is there a more seneca way of doing this?
     if (ent.id$ && !obj.Id) obj.Id = ent.id$;
 
     _connect(function (err) {
@@ -86,13 +85,15 @@ module.exports = function salesforce (seneca, opts) {
       if (isUpdate === true) {
         _removeUnUpdateableFields(obj, name, function (err, obj) {
           if (err) return cb(err);
+          debug('updating obj', obj);
           conn.sobject(name).update(obj, function (err, res) {
             if (err || !res.success) return cb(err || res);
             return cb(null, ent);
           });
         });
       } else {
-        conn.sobject(name).update(obj, function (err, res) {
+        debug('creating obj', obj);
+        conn.sobject(name).create(obj, function (err, res) {
           if (err || !res.success) return cb(err || res);
           ent.id$ = res.id;
           return cb(null, ent);
@@ -102,7 +103,7 @@ module.exports = function salesforce (seneca, opts) {
   };
 
   function load (args, cb) {
-    debug('load', args, args.q, args.q.id);
+    debug('load', args);
     if (!args.q || !args.q.id) return cb('"id" field required');
 
     _connect(function (err) {
@@ -118,9 +119,23 @@ module.exports = function salesforce (seneca, opts) {
     });
   };
 
+  function remove (args, cb) {
+    debug('remove', args);
+    if (!args.q || !args.q.id) return cb('"id" field required');
+
+    _connect(function (err) {
+      if (err) return cb(err);
+      conn.sobject(args.name).destroy(args.q.id, function (err, res) {
+        if (err) return cb(err);
+        cb(null, res);
+      });
+    });
+  };
+
   return {
     list: list,
     save: save,
-    load: load
+    load: load,
+    remove: remove
   };
 };

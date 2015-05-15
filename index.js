@@ -1,4 +1,3 @@
-var util = require('util');
 var debug = require('debug')('seneca-salesforce-store');
 var name = 'salesforce-store';
 
@@ -11,10 +10,7 @@ module.exports = function (opts) {
     list: salesforce.list,
     save: salesforce.save,
     load: salesforce.load,
-    remove: function (args, cb) {
-      debug('remove', args);
-      return cb();
-    },
+    remove: salesforce.remove,
     close: function (args, cb) {
       return cb();
     },
@@ -25,11 +21,9 @@ module.exports = function (opts) {
   };
 
   var storedesc = seneca.store.init(seneca, opts, store);
-  debug('storedesc: ' + util.inspect(storedesc));
   var tag = storedesc.tag;
 
   seneca.add({ init: store.name, tag: tag }, function (args, done) {
-    debug('in init! args: ', args);
     done();
   });
 
