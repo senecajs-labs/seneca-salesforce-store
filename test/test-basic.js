@@ -12,12 +12,17 @@ exports.setUp = function (done) {
   seneca.ready(done);
 };
 
-exports.it_should_list_leads = function (done) {
+
+exports.it_should_list_all_leads = function (done) {
   var lead = seneca.make$('Lead');
-  lead.list$({}, done);
+  lead.list$(done);
 };
 
+
 exports.it_should_CRUD_lead = function (done) {
+  var UPDATED_COMPANY = 'Test Company updated company name!';
+  var UPDATED_LASTNAME = 'test Name updated last name';
+
   function createLead (cb) {
     var lead = seneca.make$('Lead');
     lead.Company = 'Test Company';
@@ -29,13 +34,13 @@ exports.it_should_CRUD_lead = function (done) {
     });
   }
 
-  function loadUpdateLead (id, cb) {
+  function loadAndUpdateLead (id, cb) {
     seneca.make$('Lead').load$(id, function (err, entity) {
       assert.ok(!err, err);
       console.log('entity', entity);
       assert.equal(entity.id$, id, 'Entity id not ok: ', entity.$id, entity.CompanyName, entity.LastName);
-      entity.Company = 'Updated company name!';
-      entity.LastName = 'Updated last name';
+      entity.Company = UPDATED_COMPANY;
+      entity.LastName = UPDATED_LASTNAME;
       entity.save$(function (err) {
         if (err) return cb(err);
         return cb(null, id);
@@ -43,13 +48,23 @@ exports.it_should_CRUD_lead = function (done) {
     });
   }
 
+  function findLead(id, cb) {
+    var lead = seneca.make$('Lead');
+    lead.list$({Company: UPDATED_COMPANY, LastName: UPDATED_LASTNAME}, function(err, data) {
+      assert.ok(!err, err);
+      assert.equal(data.totalSize, 1, 'Expected 1 recored returned, got: ' + data.totalSize);
+      cb(null, id);
+    });
+  };
+
   function removeLead (id, cb) {
     seneca.make$('Lead').remove$(id, cb);
   }
 
   async.waterfall([
     createLead,
-    loadUpdateLead,
+    loadAndUpdateLead,
+    findLead,
     removeLead
   ], function (err) {
        assert.ok(!err);

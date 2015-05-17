@@ -14,18 +14,17 @@ module.exports = function salesforce (seneca, opts) {
 
   // salesforce sql doesn't support 'select *' so instead
   // we build up the select statement from metadata
-  function _readTable (table, cb) {
+  function _readTable (table, where, cb) {
     conn.sobject(table).describe(function (err, meta) {
       if (err) return cb(err);
 
       var wanted = _.filter(meta.fields, function (f) {
-        if (f.createable === true && f.updateable === true) {
-          return f.name;
-        }
+        if (f.createable === true && f.updateable === true) return f.name;
       });
 
       var names = _.pluck(wanted, 'name');
-      var q = 'SELECT ' + names.join(', ') + ' from ' + table;
+      var q = 'SELECT ' + names.join(', ') + ' from ' + table + ' ' + where;
+      debug('_readTable select statement: ', q);
       conn.query(q, cb);
     });
   };
@@ -39,29 +38,21 @@ module.exports = function salesforce (seneca, opts) {
       if (err) return cb(err);
 
       // Note: 'Id' field is not in the table metadata
-      var obj2 = {
+      var cleaned = {
         'Id': obj['Id']
       };
 
       _.each(_.keys(obj), function (k) {
         var mf = _.findWhere(meta.fields, {name: k, updateable: true});
-        if (mf) obj2[k] = obj[k];
+        if (mf) cleaned[k] = obj[k];
       });
 
-      return cb(null, obj2);
-    });
-  };
-
-  function list (args, cb) {
-    debug('list', args);
-    _connect(function (err) {
-      if (err) return cb(err);
-      return _readTable(args.name, cb);
+      return cb(null, cleaned);
     });
   };
 
   // TODO - is there a way of doing this in seneca already?
-  function unwrapEnt (ent) {
+  function _unwrapEnt (ent) {
     var obj = {};
     _.each(ent.fields$(), function (f) {
       obj[f] = ent[f];
@@ -69,10 +60,25 @@ module.exports = function salesforce (seneca, opts) {
     return obj;
   };
 
+  function _where(args) {
+    var s = _.map(_.keys(args), function(k) {
+      return k + ' = \'' + args[k] + '\'';
+    });
+    return s.length > 0 ? 'WHERE ' + s.join(' and ') : '';
+  };
+
+  function list (args, cb) {
+    debug('list', args);
+    _connect(function (err) {
+      if (err) return cb(err);
+      return _readTable(args.name, _where(args.q), cb);
+    });
+  };
+
   function save (args, cb) {
     debug('save', args);
     var ent = args.ent;
-    var obj = unwrapEnt(ent);
+    var obj = _unwrapEnt(ent);
 
     if (ent.id$ && !obj.Id) obj.Id = ent.id$;
 
