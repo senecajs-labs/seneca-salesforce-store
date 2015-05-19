@@ -23,7 +23,7 @@ module.exports = function salesforce (seneca, opts) {
       });
 
       var names = _.pluck(wanted, 'name');
-      var q = 'SELECT ' + names.join(', ') + ' from ' + table + ' ' + where;
+      var q = 'SELECT Id, ' + names.join(', ') + ' from ' + table + ' ' + where;
       debug('_readTable select statement: ', q);
       conn.query(q, cb);
     });
