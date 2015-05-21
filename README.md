@@ -1,5 +1,8 @@
 # Seneca Salesforce Store
 
+### Status
+[![Build Status](https://travis-ci.org/nearform/seneca-salesforce-store.png)](https://travis-ci.org/nearform/seneca-salesforce-store)
+
 A Seneca [Data Store](https://github.com/rjrodger/seneca/blob/master/doc/data-store.md) for SalesForce. 
 
 `seneca-salesforce-store` is built on top of [JSForce](https://www.npmjs.com/package/jsforce), which is documented in detail [here](https://jsforce.github.io/document/).
