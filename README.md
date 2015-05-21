@@ -1,7 +1,7 @@
 # Seneca Salesforce Store
 
-### Status
 [![Build Status](https://travis-ci.org/nearform/seneca-salesforce-store.png)](https://travis-ci.org/nearform/seneca-salesforce-store)
+[![Coverage](https://coveralls.io/repos/nearform/seneca-salesforce-store/badge.svg?branch=master)](https://coveralls.io/r/nearform/seneca-salesforce-store?branch=master)
 
 A Seneca [Data Store](https://github.com/rjrodger/seneca/blob/master/doc/data-store.md) for SalesForce. 
 

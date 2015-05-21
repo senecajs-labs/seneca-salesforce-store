@@ -4,9 +4,10 @@
   "description": "Salesforce plugin for Seneca",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/turbo test",
-    "coverage": "./node_modules/.bin/istanbul cover --dir cov-unit ./node_modules/.bin/turbo -- test && ./node_modules/.bin/istanbul report && echo \"See html coverage at: ./coverage/lcov-report/index.html\"",
-    "semistandard": "./node_modules/.bin/semistandard index.js salesforce.js"
+    "test-only": "./node_modules/.bin/turbo test",
+    "test": "./node_modules/.bin/istanbul cover --dir cov-unit ./node_modules/.bin/turbo -- test && ./node_modules/.bin/istanbul report && echo \"See html coverage at: ./coverage/lcov-report/index.html\"",
+    "semistandard": "./node_modules/.bin/semistandard index.js salesforce.js",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
   "pre-commit": [
     "semistandard",
@@ -19,6 +20,7 @@
   "author": "Damian Beresford <@dberesford>",
   "license": "MIT",
   "devDependencies": {
+    "coveralls": "^2.11.2",
     "istanbul": "^0.3.14",
     "pre-commit": "^1.0.7",
     "proxyquire": "^1.5.0",
