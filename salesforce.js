@@ -86,9 +86,8 @@ module.exports = function salesforce (seneca, opts) {
       if (err) return cb(err);
 
       var name = ent.name ? ent.name : args.name;
-      var isUpdate = ent.id$ ? true : false;
 
-      if (isUpdate === true) {
+      if (ent.id$) {
         _removeUnUpdateableFields(obj, name, function (err, obj) {
           if (err) return cb(err);
           debug('updating obj', obj);
