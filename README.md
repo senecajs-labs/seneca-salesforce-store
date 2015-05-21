@@ -25,14 +25,16 @@ A Seneca [Data Store](https://github.com/rjrodger/seneca/blob/master/doc/data-st
 
 ```
 
-See [test-basic](./test/test-basic.js') for more.
+See [test-basic](test/accept/test-basic.js') for more.
 
 ## Tests
 
-The tests hit SalesForce (creatings test Leads etc), to run these you need to provide your own Salesforce Sandbox environment and credentials. To run:
+Basic unit tests with `npm test`, everything is mocked.
+
+There are acceptance tests which hit SalesForce (creatings test Leads etc), to run these you need to provide your own Salesforce Sandbox environment and credentials. To run:
 
 ```
-env url='https://test.salesforce.com' username=foo@example.com password=Password1 ./node_modules/.bin/turbo test
+env url='https://test.salesforce.com' username=foo@example.com password=Password1 ./node_modules/.bin/turbo test/accept
 ```
 
 ## Debug

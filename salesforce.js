@@ -60,8 +60,8 @@ module.exports = function salesforce (seneca, opts) {
     return obj;
   };
 
-  function _where(args) {
-    var s = _.map(_.keys(args), function(k) {
+  function _where (args) {
+    var s = _.map(_.keys(args), function (k) {
       return k + ' = \'' + args[k] + '\'';
     });
     return s.length > 0 ? 'WHERE ' + s.join(' and ') : '';

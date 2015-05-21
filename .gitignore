@@ -2,3 +2,5 @@ node_modules
 *~
 test.sh
 TODO
+cov-unit
+coverage
