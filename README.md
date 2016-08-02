@@ -1,9 +1,10 @@
+![Seneca](http://senecajs.org/files/assets/seneca-logo.png)
+> A Seneca [Data Store](https://github.com/rjrodger/seneca/blob/master/doc/data-store.md) for SalesForce.
+
 # Seneca Salesforce Store
 
-[![Build Status](https://travis-ci.org/nearform/seneca-salesforce-store.png)](https://travis-ci.org/nearform/seneca-salesforce-store)
-[![Coverage](https://coveralls.io/repos/nearform/seneca-salesforce-store/badge.svg?branch=master)](https://coveralls.io/r/nearform/seneca-salesforce-store?branch=master)
-
-A Seneca [Data Store](https://github.com/rjrodger/seneca/blob/master/doc/data-store.md) for SalesForce. 
+[![Build Status](https://travis-ci.org/senecajs-labs/seneca-salesforce-store.png)](https://travis-ci.org/senecajs-labs/seneca-salesforce-store)
+[![Coverage](https://coveralls.io/repos/senecajs-labs/seneca-salesforce-store/badge.svg?branch=master)](https://coveralls.io/r/senecajs-labs/seneca-salesforce-store?branch=master)
 
 `seneca-salesforce-store` is built on top of [JSForce](https://www.npmjs.com/package/jsforce), which is documented in detail [here](https://jsforce.github.io/document/).
 
@@ -43,3 +44,8 @@ env url='https://test.salesforce.com' username=foo@example.com password=Password
 ## Debug
 
 `seneca-salesforce-store` uses [debug](https://www.npmjs.com/package/debug), to enable, pass `DEBUG=seneca-salesforce-store` environment variable.
+
+## License
+Copyright Damian Beresford and Senecajs.org contributors, 2016, Licensed under [MIT][].
+
+[MIT]: ./LICENSE

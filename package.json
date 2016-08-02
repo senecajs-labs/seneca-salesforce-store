@@ -9,6 +9,10 @@
     "semistandard": "./node_modules/.bin/semistandard index.js salesforce.js",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/senecajs-labs/seneca-salesforce-store.git"
+  },
   "pre-commit": [
     "semistandard",
     "test"
