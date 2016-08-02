@@ -29,7 +29,7 @@
 
 ```
 
-See [test-basic](test/accept/test-basic.js') for more.
+See [test-basic](./test/accept/test-basic.js') for more.
 
 ## Tests
 
